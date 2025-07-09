@@ -51,10 +51,18 @@ export async function createFeedback(params: CreateFeedbackParams) {
 
     let feedbackRef;
 
-    if (feedbackId) {
-      feedbackRef = db.collection("feedback").doc(feedbackId);
+    const temp = await db
+    .collection("feedback")
+    .where("interviewId", "==", interviewId)
+    .where("userId", "==", userId)
+    .limit(1)
+    .get();
+
+    if ((temp.empty)) {
+        feedbackRef = db.collection("feedback").doc();
     } else {
-      feedbackRef = db.collection("feedback").doc();
+        const feedbackDoc = temp.docs[0];
+        feedbackRef = db.collection("feedback").doc(feedbackDoc.id);
     }
 
     await feedbackRef.set(feedback);
