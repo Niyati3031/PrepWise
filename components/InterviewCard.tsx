@@ -21,7 +21,7 @@ const InterviewCard = async ({
 }: InterviewCardProps) => {
   const currentUser = await getCurrentUser();
   const feedback =
-    userId && id && (userId == currentUser)
+    userId && id && (userId == currentUser?.id)
       ? await getFeedbackByInterviewId({
           interviewId: id,
           userId,
