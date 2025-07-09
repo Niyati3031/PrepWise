@@ -9,7 +9,7 @@ import { cn, getRandomInterviewCover } from "@/lib/utils";
 import { getFeedbackByInterviewId } from "@/lib/actions/general.action";
 import { getCurrentUser } from "@/lib/actions/auth.action";
 
-const currentUser = await getCurrentUser();
+
 
 const InterviewCard = async ({
   id,
@@ -19,6 +19,7 @@ const InterviewCard = async ({
   techstack,
   createdAt,
 }: InterviewCardProps) => {
+  const currentUser = await getCurrentUser();
   const feedback =
     userId && id && (userId == currentUser)
       ? await getFeedbackByInterviewId({
